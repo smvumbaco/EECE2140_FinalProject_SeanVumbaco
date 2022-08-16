@@ -13,10 +13,16 @@ class Generator:
 	"""
 
 	def __init__(self, grid=None, clues=36):
+		"""
+		Constructor for Generator class. Main attributes are
+		complete_grid - filled out sudoku board
+		incomplete_grid - playable board presented to player
+		:param grid: 2D array (list of lists)
+		:param clues: integer
+		"""
 		self.complete_grid = Grid.EMPTY_GRID
 		# self.filled = Grid.ALL_POSITIONS -- This isn't working for some reason.
 		self.filled = [(i, j) for i in range(9) for j in range(9)]
-		# print(f'self.filled: {self.filled}')
 		self.unfilled = list()
 		self.clues = clues # How many values need to be left in playable grid
 
