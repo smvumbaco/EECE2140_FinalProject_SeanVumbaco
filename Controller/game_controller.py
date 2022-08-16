@@ -34,6 +34,7 @@ if __name__ == '__main__':
         elif menu_select == 'B':
             game = Game()
             game_grid = game.load_board() # Serious problems here
+            game = Game(coords, game_grid)
             game.play_game()
             # print('Thank you for playing!')
         else:

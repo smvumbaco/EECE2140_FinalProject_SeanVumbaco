@@ -1,12 +1,15 @@
 import pickle
-
+from View.coordinates import Coordinates
+from Model.generator import Generator
 
 class Game:
     """
     Controls all the major functions of a game of sudoku
     """
 
-    def __init__(self, coords, grid):
+    DIFFICULTIES = {'A': 36, 'B': 31, 'C': 26}
+
+    def __init__(self, coords=Coordinates(), grid=None):
         self.coords = coords
         self.grid = grid
 
@@ -24,9 +27,25 @@ class Game:
             except FileNotFoundError:
                 print('Sorry! That file name is not recognized.\n')
 
+    def negative_select(self, select):
+        if select == -2:
+            hint = self.grid.insert_hint()
+            print(hint)
+            return False
+        elif select == -3:
+            clue_row = self.coords.prompt_row()
+            clue_col = self.coords.prompt_col()
+            hint = self.grid.insert_hint(False, clue_row, clue_col)
+            print(hint)
+            return False
+        else:
+            self.save_board()
+            return True
+
     def play_game(self):
-        moves = 1
+        moves = 0
         while self.grid.get_incomplete_grid() != self.grid.get_complete_grid():
+            moves += 1
             print(f'\nMove {moves}')
             print('Enter X at any time to exit back to the main menu.')
             print('Enter Y at any time to plug in a random hint.')
@@ -35,20 +54,14 @@ class Game:
             print(self.grid)
             print('\n')
             row_select = self.coords.prompt_row()
+
             if row_select < 0:
                 if row_select == -1:
                     return
-                elif row_select == -2:
-                    hint = self.grid.insert_hint()
-                    print(hint)
-                elif row_select == -3:  # row_select == -3 -> specific hint
-                    clue_row = self.coords.prompt_row()
-                    clue_col = self.coords.prompt_col()
-                    hint = self.board.insert_hint(False, clue_row, clue_col)
-                    print(hint)
                 else:
-                    self.save_board()
-                    break
+                    cancel = self.negative_select(row_select)
+                    if cancel:
+                        break
                 continue
             col_select = self.coords.prompt_col()
             if col_select < 0:
@@ -87,4 +100,3 @@ class Game:
             else:
                 self.grid.plugin(row_select, col_select, num_select)
                 print('Correct!')
-            moves += 1

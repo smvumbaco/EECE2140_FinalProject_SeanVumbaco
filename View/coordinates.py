@@ -10,8 +10,8 @@ class Coordinates:
 
     def prompt_row(self):
         while True:
-            row = input('Select a row: ')[0].upper()
             try:
+                row = input('Select a row: ')[0].upper()
                 return Coordinates.ROW_DICT[row]
             except KeyError:
                 print('Invalid row selection. Please try again.')
@@ -20,8 +20,8 @@ class Coordinates:
 
     def prompt_col(self):
         while True:
-            col = input('Select a column: ')[0].upper()
             try:
+                col = input('Select a column: ')[0].upper()
                 return Coordinates.COL_DICT[col]
             except KeyError:
                 print('Invalid column selection. Please try again.')
