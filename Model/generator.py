@@ -12,31 +12,16 @@ class Generator:
 	3. solve(): Determines whether a given board is solvable - COUNTS number of solutions
 	"""
 
-	NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-	EMPTY_GRID = [[0 for i in range(9)] for j in range(9)]
-	ALL_POSITIONS = [(i, j) for i in range(9) for j in range(9)]
+	def __init__(self, grid=None, clues=36):
+		self.complete_grid = Grid.EMPTY_GRID
+		self.filled = Grid.ALL_POSITIONS
+		self.unfilled = list()
+		self.clues = clues # How many values need to be left in playable grid
 
-	def __init__(self,grid=None, clues=36):
-		if grid:
-			# Modify this for selecting old boards later on
-			if len(grid[0]) == 9 and len(grid) == 9:
-				self.grid = grid
-				self.original = deepcopy(grid)
-				self.solve_input_sudoku()
-			else:
-				print("input needs to be a 9x9 matrix")
-		else:
-			# Starting with a completely new grid
-			self.complete_grid = Generator.EMPTY_GRID
-			self.filled = Generator.ALL_POSITIONS
-			self.unfilled = list()
-			self.clues = clues # How many values need to be left in playable grid
-			# self.generate_puzzle()
-			# self.generate_solution(self.complete_grid)
-			self.make_full_grid() # Fill out self.complete_grid()
-			self.incomplete_grid = deepcopy(self.complete_grid) # MUST make deepcopy - object of objects
-			# self.original = copy.deepcopy(self.grid)
-			self.make_playable_grid()
+		self.make_full_grid() # Fill out self.complete_grid()
+
+		self.incomplete_grid = deepcopy(self.complete_grid) # MUST make deepcopy - object of objects
+		self.make_playable_grid()
 
 	def get_incomplete_grid(self):
 		return self.incomplete_grid
@@ -44,7 +29,7 @@ class Generator:
 	def get_complete_grid(self):
 		return self.complete_grid
 
-	@staticmethod # Does not work... alternate method for shuffling digits 1-9 :(
+	@staticmethod # Does not work... :( alternate method for shuffling digits 1-9
 	def shuffle_list():
 		ref = Generator.NUMS
 		rands = list()
@@ -176,9 +161,9 @@ class Generator:
 			col = i % 9
 			# Investigate current square (if equal to 0) - else, move to next one
 			if self.complete_grid[row][col] == 0:
-				shuffle(Generator.NUMS)
+				shuffle(Grid.NUMS)
 				# nums = Generator.shuffle_list() < this doesn't work... appears to be remedied by random.shuffle() method
-				for num in Generator.NUMS:  # CHOOSE a random int to go in square
+				for num in Grid.NUMS:  # CHOOSE a random int to go in square
 					# if self.valid_location(self.complete_grid, row, col, number):  # If valid, ASSIGN number
 					if not self.conflict(self.complete_grid, row, col, num):
 						self.complete_grid[row][col] = num

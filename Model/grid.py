@@ -2,6 +2,9 @@ from Model.square import Square
 from random import randint
 
 class Grid:
+    """
+    As of right now, basically just establishes variables that are consistent with all created sudoku boards
+    """
 
     NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -17,6 +20,10 @@ class Grid:
 
     ALL_BLOCKS = [BLOCK1, BLOCK2, BLOCK3, BLOCK4, BLOCK5, BLOCK6, BLOCK7, BLOCK8, BLOCK9]
 
+    EMPTY_GRID = [[0 for i in range(9)] for j in range(9)]
+    ALL_POSITIONS = [(i, j) for i in range(9) for j in range(9)]
+
+    '''
     def __init__(self, grid=[[0 for i in range(9)] for j in range(9)], clues=36,
                  unfilled=[(i, j) for i in range(9) for j in range(9)],
                  filled=list(), curr_row=0, curr_col=0):
@@ -27,7 +34,7 @@ class Grid:
         self.filled = filled # May be used for better efficiency
         self.curr_row = curr_row
         self.curr_col = curr_col
-
+    '''
 
 #
 #     @staticmethod
