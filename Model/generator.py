@@ -1,6 +1,5 @@
 from Model.grid import Grid
-from random import randint
-from random import shuffle
+from random import randint, shuffle
 from copy import deepcopy
 from View.coordinates import Coordinates
 
@@ -12,6 +11,8 @@ class Generator:
 	3. solve(): Determines whether a given board is solvable - COUNTS number of solutions
 	"""
 
+	NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 	def __init__(self, grid=None, clues=36):
 		"""
 		Constructor for Generator class. Main attributes are
@@ -20,13 +21,16 @@ class Generator:
 		:param grid: 2D array (list of lists)
 		:param clues: integer
 		"""
-		self.complete_grid = Grid.EMPTY_GRID
-		# self.filled = Grid.ALL_POSITIONS -- This isn't working for some reason.
+		# self.complete_grid = Grid.EMPTY_GRID - This doesn't work.
+		self.complete_grid = [[0 for i in range(9)] for j in range(9)]
+		# self.filled = Grid.ALL_POSITIONS # -- This isn't working for some reason.
 		self.filled = [(i, j) for i in range(9) for j in range(9)]
 		self.unfilled = list()
 		self.clues = clues # How many values need to be left in playable grid
+		self.solutions = 0
 
-		self.make_full_grid() # Fill out self.complete_grid()
+		# self.make_full_grid() # Fill out self.complete_grid()
+		self.make_full_grid()
 
 		self.incomplete_grid = deepcopy(self.complete_grid) # MUST make deepcopy - object of objects
 		self.make_playable_grid()
@@ -49,7 +53,7 @@ class Generator:
 
 	def __str__(self):
 		# Printing out complete grid and incomplete grid very useful for debugging!!!
-		# output = self.string_grid(self.complete_grid) + '\n\n\n' + self.string_grid(self.incomplete_grid)
+		# output = self.string_grid(self.complete_grid) # + '\n\n\n' + self.string_grid(self.incomplete_grid)
 		output = self.string_grid(self.incomplete_grid)
 		return output
 
@@ -170,9 +174,10 @@ class Generator:
 			col = i % 9
 			# Investigate current square (if equal to 0) - else, move to next one
 			if self.complete_grid[row][col] == 0:
-				shuffle(Grid.NUMS)
+				shuffle(Generator.NUMS)
+				# print(Generator.NUMS)
 				# nums = Generator.shuffle_list() < this doesn't work... appears to be remedied by random.shuffle() method
-				for num in Grid.NUMS:  # CHOOSE a random int to go in square
+				for num in Generator.NUMS:  # CHOOSE a random int to go in square
 					# if self.valid_location(self.complete_grid, row, col, number):  # If valid, ASSIGN number
 					if not self.conflict(self.complete_grid, row, col, num):
 						self.complete_grid[row][col] = num

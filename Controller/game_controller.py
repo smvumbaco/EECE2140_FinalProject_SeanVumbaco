@@ -2,7 +2,6 @@ from Model.generator import Generator
 from View.game import Game
 from View.menu import Menu
 from View.coordinates import Coordinates
-import pickle
 
 # a = Grid()
 # a.generate_solution(a.get_board())
@@ -13,9 +12,6 @@ import pickle
 # a.generate_solution(a.get_board())
 
 if __name__ == '__main__':
-    # c = Generator()
-    # print(c)
-
     menu = Menu()
     coords = Coordinates()
 
