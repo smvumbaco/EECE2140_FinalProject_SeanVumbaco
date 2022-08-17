@@ -6,8 +6,6 @@ class Grid:
     As of right now, basically just establishes variables that are consistent with all created sudoku boards
     """
 
-    NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
     BLOCK1 = [(i, j) for i in range(3) for j in range(3)]
     BLOCK2 = [(i, j) for i in range(3) for j in range(3, 6)]
     BLOCK3 = [(i, j) for i in range(3) for j in range(6, 9)]
@@ -20,6 +18,8 @@ class Grid:
 
     ALL_BLOCKS = [BLOCK1, BLOCK2, BLOCK3, BLOCK4, BLOCK5, BLOCK6, BLOCK7, BLOCK8, BLOCK9]
 
+    # Use of these functions only leads to issues... not completely sure why
+    NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     EMPTY_GRID = [[0 for i in range(9)] for j in range(9)]
     ALL_POSITIONS = [(i, j) for i in range(9) for j in range(9)]
 

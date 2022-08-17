@@ -1,6 +1,5 @@
 import pickle
 from View.coordinates import Coordinates
-from Model.generator import Generator
 
 class Game:
     """
@@ -10,15 +9,28 @@ class Game:
     DIFFICULTIES = {'A': 36, 'B': 31, 'C': 26}
 
     def __init__(self, coords=Coordinates(), grid=None):
+        """
+        Constructor for Game object
+        :param coords: Coordiates() object
+        :param grid: Generator() object - don't define in arguments to avoid unnecessary processing
+        """
         self.coords = coords
         self.grid = grid
 
     def save_board(self):
+        """
+        Saves the current board under a file name specified by the user
+        :return: None - just saves Generator() object to binary file
+        """
         filename = input('Enter the name of the saved board: ')
         with open(filename, 'wb') as f:
             pickle.dump(self.grid, f)
 
     def load_board(self):
+        """
+        Pulls an existing Generator() object from a named file
+        :return: Generator() object
+        """
         while True:
             try:
                 filename = input('Enter the name of the board to load in: ')
@@ -28,7 +40,15 @@ class Game:
                 print('Sorry! That file name is not recognized.\n')
 
     def negative_select(self, select):
-        if select == -2:
+        """
+        Handles alternate yet anticipated user inputs
+        Returns whether to cut out of the game or not
+        :param select: int
+        :return: boolean
+        """
+        if select == -1:
+            return True
+        elif select == -2:
             hint = self.grid.insert_hint()
             print(hint)
             return False
@@ -43,6 +63,11 @@ class Game:
             return True
 
     def play_game(self):
+        """
+        Runs through game of sudoku
+        Exits out if completed, saved, or manually quit by user
+        :return: None
+        """
         moves = 0
         while self.grid.get_incomplete_grid() != self.grid.get_complete_grid():
             moves += 1
@@ -56,43 +81,20 @@ class Game:
             row_select = self.coords.prompt_row()
 
             if row_select < 0:
-                if row_select == -1:
-                    return
-                else:
-                    cancel = self.negative_select(row_select)
-                    if cancel:
-                        break
+                cancel = self.negative_select(row_select)
+                if cancel:
+                    break
                 continue
             col_select = self.coords.prompt_col()
             if col_select < 0:
-                if col_select == -1:
-                    return
-                elif col_select == -2:
-                    hint = self.grid.insert_hint()
-                    print(hint)
-                elif col_select == -3:  # row_select == -3 -> specific hint
-                    clue_row = self.coords.prompt_row()
-                    clue_col = self.coords.prompt_col()
-                    hint = self.insert_hint(False, clue_row, clue_col)
-                    print(hint)
-                else:
-                    self.save_board()
+                cancel = self.negative_select(row_select)
+                if cancel:
                     break
                 continue
             num_select = self.coords.prompt_num()
             if num_select < 0:
-                if num_select == -1:
-                    return
-                elif num_select == -2:
-                    hint = self.grid.insert_hint()
-                    print(hint)
-                elif num_select == -3:
-                    clue_row = self.coords.prompt_row()
-                    clue_col = self.coords.prompt_col()
-                    hint = self.grid.insert_hint(False, clue_row, clue_col)
-                    print(hint)
-                else:
-                    self.save_board()
+                cancel = self.negative_select(row_select)
+                if cancel:
                     break
                 continue
             if self.grid.get_complete_grid()[row_select][col_select] != num_select:

@@ -1,10 +1,19 @@
 class Menu:
 
     def __init__(self, play_recall='', fillin=0):
+        """
+        Constructor for Menu object - just needed to set up attributes
+        :param play_recall: string - User entry to play, recall a grid, or exit the game
+        :param fillin: int - Number of clues (difficulty)
+        """
         self.play_recall = play_recall
         self.fillin = fillin
 
     def prompt_menu(self):
+        """
+        Handles user input for the main menu of the game
+        :return: string
+        """
         while True:
             print('\nWelcome to All About Sudoku! Please choose an option from below:', '\n',
                   'A: Play a new game', '\n',
@@ -27,6 +36,10 @@ class Menu:
                 print('Input must not be blank.\n')
 
     def prompt_difficulty(self):
+        """
+        Handles the user input for selecting a grid difficulty (number of clues)
+        :return: int
+        """
         while True:
             difficulty = input('Please select a difficulty: \n' +
                                'A: Easy \n' +
