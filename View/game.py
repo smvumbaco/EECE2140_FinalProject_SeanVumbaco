@@ -16,6 +16,7 @@ class Game:
         """
         self.coords = coords
         self.grid = grid
+        self.moves = 0
 
     def save_board(self):
         """
@@ -68,10 +69,9 @@ class Game:
         Exits out if completed, saved, or manually quit by user
         :return: None
         """
-        moves = 0
         while self.grid.get_incomplete_grid() != self.grid.get_complete_grid():
-            moves += 1
-            print(f'\nMove {moves}')
+            self.moves += 1
+            print(f'\nMove {self.moves}')
             print('Enter X at any time to exit back to the main menu.')
             print('Enter Y at any time to plug in a random hint.')
             print('Enter Z at any time to request a specific hint.')
@@ -87,13 +87,13 @@ class Game:
                 continue
             col_select = self.coords.prompt_col()
             if col_select < 0:
-                cancel = self.negative_select(row_select)
+                cancel = self.negative_select(col_select)
                 if cancel:
                     break
                 continue
             num_select = self.coords.prompt_num()
             if num_select < 0:
-                cancel = self.negative_select(row_select)
+                cancel = self.negative_select(num_select)
                 if cancel:
                     break
                 continue

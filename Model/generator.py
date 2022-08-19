@@ -240,9 +240,8 @@ class Generator:
 						if not self.find_empty_spot(grid):
 							self.solutions += 1
 							break
-						else:
-							if self.solve(grid):
-								return True
+						elif self.solve(grid):
+							return True
 				break
 		grid[row][col] = 0
 		return False
@@ -264,10 +263,8 @@ class Generator:
 						self.complete_grid[row][col] = num
 						if not self.find_empty_spot(self.complete_grid): # SUCCESS! self.complete_grid is filled out
 							return True
-						else:
-							if self.make_full_grid(): # Recursive step: base case is find_empty_spot function
-								# if the grid is full
-								return True
+						elif self.make_full_grid(): # Recursive step: base case is find_empty_spot function
+							return True # If the grid is full
 				break # Exhausted every num in Generator.NUMS & all invalid - have to start backtracking
 		# ONLY reaches here if plugging in was UNSUCCESSFUL - must blank out and keep trying random numbers
 		self.complete_grid[row][col] = 0

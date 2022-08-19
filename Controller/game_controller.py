@@ -3,15 +3,16 @@ from View.game import Game
 from View.menu import Menu
 from View.coordinates import Coordinates
 
+'''
 # a = Grid()
 # a.generate_solution(a.get_board())
 # print(a)
-
 # b = SudokuGenerator()
-
 # a.generate_solution(a.get_board())
+'''
 
 if __name__ == '__main__':
+
     menu = Menu()
     coords = Coordinates()
 

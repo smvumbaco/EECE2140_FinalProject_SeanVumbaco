@@ -1,5 +1,5 @@
-from Model.square import Square
-from random import randint
+# from Model.square import Square
+# from random import randint
 
 class Grid:
     """
